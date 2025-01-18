@@ -2,15 +2,40 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 
-// Add SVG component for weather
+// Add a better SVG component for weather
 const WeatherIcon = () => (
   <svg 
     viewBox="0 0 24 24" 
-    className="w-16 h-16 text-yellow-400"
-    fill="currentColor"
+    className="w-16 h-16"
+    fill="none"
+    stroke="currentColor"
   >
-    <path d="M12 7a5 5 0 012.606 9.296A6.002 6.002 0 0117.5 22H7a6 6 0 01-2.89-11.282A5 5 0 1112 7z"/>
-    <circle cx="12" cy="5" r="3" fill="currentColor"/>
+    {/* Sun circle */}
+    <circle 
+      cx="12" 
+      cy="12" 
+      r="5" 
+      className="fill-yellow-400 stroke-yellow-500"
+    />
+    {/* Sun rays */}
+    {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+      <line
+        key={angle}
+        x1="12"
+        y1="12"
+        x2={12 + 4 * Math.cos(angle * Math.PI / 180)}
+        y2={12 + 4 * Math.sin(angle * Math.PI / 180)}
+        className="stroke-yellow-400"
+        strokeWidth="2"
+        transform={`rotate(${angle} 12 12)`}
+      />
+    ))}
+    {/* Small cloud */}
+    <path
+      d="M16 13a3 3 0 11-6 0 3 3 0 016 0z M10 13a3 3 0 11-6 0 3 3 0 016 0z"
+      className="fill-white/40 stroke-white/60"
+      strokeWidth="0.5"
+    />
   </svg>
 )
 
@@ -70,9 +95,21 @@ export default function HomeView() {
               <p className="text-4xl font-bold text-blue-400">{weatherData.temp}°C</p>
               <p className="text-gray-400">{weatherData.condition}</p>
             </div>
-            <div className="text-6xl">
+            <motion.div 
+              className="text-6xl"
+              whileHover={{ scale: 1.1 }}
+              animate={{ 
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.05, 0.95, 1]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            >
               <WeatherIcon />
-            </div>
+            </motion.div>
           </div>
         </motion.div>
 
