@@ -2,6 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 
+// Add SVG component for weather
+const WeatherIcon = () => (
+  <svg 
+    viewBox="0 0 24 24" 
+    className="w-16 h-16 text-yellow-400"
+    fill="currentColor"
+  >
+    <path d="M12 7a5 5 0 012.606 9.296A6.002 6.002 0 0117.5 22H7a6 6 0 01-2.89-11.282A5 5 0 1112 7z"/>
+    <circle cx="12" cy="5" r="3" fill="currentColor"/>
+  </svg>
+)
+
 export default function HomeView() {
   const [time, setTime] = useState(new Date())
   const [weatherData] = useState({ temp: 22, condition: 'Clear' })
@@ -58,7 +70,9 @@ export default function HomeView() {
               <p className="text-4xl font-bold text-blue-400">{weatherData.temp}°C</p>
               <p className="text-gray-400">{weatherData.condition}</p>
             </div>
-            <div className="text-6xl">🌤️</div>
+            <div className="text-6xl">
+              <WeatherIcon />
+            </div>
           </div>
         </motion.div>
 
