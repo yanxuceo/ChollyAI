@@ -8,15 +8,32 @@ import WeatherView from '../components/WeatherView'
 import WorkoutView from '../components/WorkoutView'
 import TransportView from '../components/TransportView'
 
+interface WorkoutData {
+  type: string
+  duration: number
+  calories: number
+}
+
+interface WeatherData {
+  temperature: number
+  condition: string
+}
+
+interface TransportData {
+  route: string
+  nextArrival: string
+  status: string
+}
+
 interface LayoutState {
   currentView: 'home' | 'workout' | 'transport' | 'weather'
-  data: Record<string, unknown>
+  data: WorkoutData | WeatherData | TransportData | null
 }
 
 export default function Home() {
   const [state, setState] = useState<LayoutState>({
     currentView: 'home',
-    data: {}
+    data: null
   })
 
   useEffect(() => {
@@ -50,9 +67,9 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black overflow-hidden">
       <AnimatePresence mode="wait" initial={false}>
         {state.currentView === 'home' && <HomeView />}
-        {state.currentView === 'workout' && <WorkoutView data={state.data} />}
-        {state.currentView === 'transport' && <TransportView data={state.data} />}
-        {state.currentView === 'weather' && <WeatherView data={state.data} />}
+        {state.currentView === 'workout' && <WorkoutView data={state.data as WorkoutData} />}
+        {state.currentView === 'transport' && <TransportView data={state.data as TransportData} />}
+        {state.currentView === 'weather' && <WeatherView data={state.data as WeatherData} />}
       </AnimatePresence>
     </div>
   )
