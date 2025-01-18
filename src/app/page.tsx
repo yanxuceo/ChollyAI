@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import io, { Socket } from 'socket.io-client'
+import io from 'socket.io-client'
 import HomeView from '../components/HomeView'
 import WeatherView from '../components/WeatherView'
 import WorkoutView from '../components/WorkoutView'
@@ -14,7 +14,6 @@ interface LayoutState {
 }
 
 export default function Home() {
-  const [socket, setSocket] = useState<Socket | null>(null)
   const [state, setState] = useState<LayoutState>({
     currentView: 'home',
     data: {}
@@ -22,7 +21,6 @@ export default function Home() {
 
   useEffect(() => {
     const newSocket = io('http://localhost:8000')
-    setSocket(newSocket)
 
     newSocket.on('VIEW_CHANGE', (data) => {
       setState({

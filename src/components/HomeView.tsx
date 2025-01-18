@@ -92,7 +92,7 @@ export default function HomeView() {
         >
           <h2 className="text-2xl font-bold text-white mb-4">System Status</h2>
           <div className="grid grid-cols-3 gap-4">
-            {['CPU', 'Memory', 'Network'].map((metric, index) => (
+            {["CPU", "Memory", "Network"].map((metric, index) => (
               <div key={metric} className="text-center">
                 <p className="text-gray-400 mb-2">{metric}</p>
                 <motion.div 
