@@ -1,20 +1,16 @@
 from fastapi import FastAPI, WebSocket
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Add CORS middleware
+# Add CORS middleware to allow connections from Next.js
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js dev server
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# We'll comment out static files for now since we're using Next.js dev server
-# app.mount("/static", StaticFiles(directory="frontend/out"), name="static")
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -25,4 +21,9 @@ async def websocket_endpoint(websocket: WebSocket):
             # Echo back the data for testing
             await websocket.send_json(data)
     except Exception as e:
-        print(f"WebSocket error: {e}") 
+        print(f"WebSocket error: {e}")
+
+# Add a health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"} 
