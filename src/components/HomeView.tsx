@@ -100,7 +100,7 @@ export default function HomeView() {
                 >
                   <motion.div
                     className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
-                    initial={{ width: '0%' }}
+                    initial={{ width: "0%" }}
                     animate={{ width: `${Math.random() * 100}%` }}
                     transition={{ 
                       duration: 2,
