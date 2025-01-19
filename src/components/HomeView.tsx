@@ -690,13 +690,13 @@ export default function HomeView() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900 p-6"
+      className="h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900 p-4"
     >
-      <div className="h-full pt-16 grid grid-cols-3 gap-6 max-w-7xl mx-auto">
-        <motion.div className="col-span-2">
+      <div className="h-full pt-20 grid grid-cols-[2fr_1fr] gap-4 mx-4">
+        <motion.div>
           <WeatherWidget data={weatherData} historyEvent={historyEvent} />
         </motion.div>
-        <div className="space-y-6">
+        <div className="space-y-4">
           <PhotoFrame />
           <SmartHomeWidget indoor={smartHome} />
         </div>
