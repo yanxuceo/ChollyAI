@@ -163,10 +163,10 @@ const SmartHomeWidget = ({ indoor }) => (
 )
 
 // Update WeatherWidget to show only outdoor data
-const WeatherWidget = ({ data, historyEvent }) => (
+const WeatherWidget = ({ data }) => (
   <GlowingBorder color="orange">
     <motion.div 
-      className="h-full bg-black/60 backdrop-blur-xl rounded-2xl p-6 border border-white/10
+      className="h-full bg-black/60 backdrop-blur-xl rounded-2xl p-4 border border-white/10
         shadow-[inset_0_0_20px_rgba(237,137,54,0.2)]
         relative overflow-hidden"
       whileHover={{ scale: 1.01 }}
@@ -175,8 +175,13 @@ const WeatherWidget = ({ data, historyEvent }) => (
         <ParticleBackground />
       </div>
       
-      <div className="relative z-10 space-y-4">
-        <h2 className="text-2xl font-bold text-white">Weather Forecast</h2>
+      <div className="relative z-10">
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            Weather Forecast
+            <span className="text-xl">🌤️</span>
+          </h3>
+        </div>
         
         {/* Today and Next 2 Days Forecast */}
         <div className="grid grid-cols-3 gap-4">
@@ -222,23 +227,56 @@ const WeatherWidget = ({ data, historyEvent }) => (
             </div>
           ))}
         </div>
+      </div>
+    </motion.div>
+  </GlowingBorder>
+)
 
-        {/* Tasks and History */}
-        <div className="grid grid-cols-2 gap-4">
-          {/* ToDo List */}
-          <div className="bg-black/30 rounded-xl p-4">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="text-lg font-semibold text-white">Today's Tasks</h3>
-              <span className="text-xl">📝</span>
-            </div>
+const ProductivityWidget = ({ germanLesson }) => (
+  <GlowingBorder color="purple">
+    <motion.div 
+      className="bg-black/60 backdrop-blur-xl rounded-2xl p-4 border border-white/10
+        shadow-[inset_0_0_20px_rgba(147,51,234,0.2)]"
+      whileHover={{ scale: 1.01 }}
+    >
+      <div className="space-y-2">
+        {/* Daily German Section */}
+        <div>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              Daily German
+              <span className="text-xl">🇩🇪</span>
+            </h3>
+            <motion.span 
+              className="text-xs text-purple-300 bg-purple-500/20 px-2 py-1 rounded-full"
+              whileHover={{ scale: 1.05 }}
+            >
+              Day {germanLesson.day}
+            </motion.span>
+          </div>
+          <div className="bg-black/30 rounded-lg p-3">
+            <p className="text-lg font-medium text-white mb-2">{germanLesson.german}</p>
+            <p className="text-sm text-purple-300">{germanLesson.chinese}</p>
+          </div>
+        </div>
+
+        {/* Tasks Section */}
+        <div>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-semibold text-white">Today's Tasks</h3>
+            <span className="text-xl">📝</span>
+          </div>
+          <div className="bg-black/30 rounded-lg p-3">
             <div className="space-y-2">
               {[
                 { text: "Team meeting at 10:00", done: true },
                 { text: "Review project proposal", done: false },
-                { text: "Prepare presentation", done: false }
+                { text: "Practice German verbs", done: false }
               ].map((task, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm">
-                  <div className={`w-4 h-4 rounded border ${task.done ? 'bg-green-500/50 border-green-400' : 'border-gray-500'}`}>
+                  <div className={`w-4 h-4 rounded border ${
+                    task.done ? 'bg-green-500/50 border-green-400' : 'border-gray-500'
+                  }`}>
                     {task.done && <span className="text-xs text-white">✓</span>}
                   </div>
                   <span className={task.done ? 'text-gray-500 line-through' : 'text-gray-300'}>
@@ -246,19 +284,6 @@ const WeatherWidget = ({ data, historyEvent }) => (
                   </span>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* History section */}
-          <div className="bg-black/30 rounded-xl p-4">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="text-lg font-semibold text-white">Today in History</h3>
-              <span className="text-xl">📚</span>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm text-purple-300">{historyEvent.year}</p>
-              <p className="text-sm font-medium text-white">{historyEvent.title}</p>
-              <p className="text-xs text-gray-400 line-clamp-2">{historyEvent.description}</p>
             </div>
           </div>
         </div>
@@ -651,21 +676,12 @@ export default function HomeView() {
     roomTemp: 21.5,
     humidity: 42
   })
-  const [germanPhrase] = useState({
-    phrase: "Alles klar",
-    meaning: "All clear / OK",
-    context: "Commonly used to confirm understanding or agreement"
+  const [germanLesson] = useState({
+    day: 42,
+    german: "Der frühe Vogel fängt den Wurm.",
+    pinyin: "der FROO-he FO-gel fengt den WURM",
+    chinese: "早起的鸟儿有虫吃 (比喻勤奋的人会获得成功)",
   })
-  const [historyEvent] = useState({
-    year: "1969",
-    title: "First Moon Landing",
-    description: "Apollo 11 astronauts Neil Armstrong and Edwin 'Buzz' Aldrin became the first humans to land on the Moon."
-  })
-  const [todos] = useState([
-    { text: "Team meeting at 10:00", done: true },
-    { text: "Review project proposal", done: false },
-    { text: "Prepare presentation", done: false }
-  ])
 
   const timeZones = [
     { city: 'Local', offset: 0 },
@@ -693,9 +709,10 @@ export default function HomeView() {
       className="h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900 p-4"
     >
       <div className="h-full pt-20 grid grid-cols-[2fr_1fr] gap-4 mx-4">
-        <motion.div>
-          <WeatherWidget data={weatherData} historyEvent={historyEvent} />
-        </motion.div>
+        <div className="space-y-4">
+          <WeatherWidget data={weatherData} />
+          <ProductivityWidget germanLesson={germanLesson} />
+        </div>
         <div className="space-y-4">
           <PhotoFrame />
           <SmartHomeWidget indoor={smartHome} />
