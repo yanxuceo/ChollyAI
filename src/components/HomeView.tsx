@@ -20,7 +20,7 @@ const GlowingBorder = ({ children, color = "blue" }) => (
       transition={{
         duration: 2,
         repeat: Infinity,
-        ease: "easeInOut"
+      ease: "easeInOut"
       }}
       style={{ filter: 'blur(20px)', zIndex: -1 }}
     />
@@ -84,10 +84,10 @@ const PhotoFrame = () => (
 // Update the SmartHomeWidget to include Quick Actions
 const SmartHomeWidget = ({ indoor }) => (
   <GlowingBorder color="green">
-    <motion.div 
+        <motion.div 
       className="bg-black/60 backdrop-blur-xl rounded-2xl p-3 border border-white/10
         shadow-[inset_0_0_20px_rgba(34,197,94,0.2)]"
-      whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.02 }}
     >
       <div className="space-y-3">
         <div className="flex justify-between items-center">
@@ -132,7 +132,7 @@ const SmartHomeWidget = ({ indoor }) => (
                 className="w-8 h-4 rounded-full bg-green-500/20 flex items-center px-0.5"
                 whileHover={{ scale: 1.05 }}
               >
-                <motion.div 
+              <motion.div
                   className="w-3 h-3 rounded-full bg-green-400"
                   layout
                 />
@@ -158,7 +158,7 @@ const SmartHomeWidget = ({ indoor }) => (
           </div>
         </div>
       </div>
-    </motion.div>
+              </motion.div>
   </GlowingBorder>
 )
 
@@ -175,11 +175,10 @@ const WeatherWidget = ({ data, historyEvent }) => (
         <ParticleBackground />
       </div>
       
-      {/* Weather content wrapper */}
       <div className="relative z-10 space-y-4">
         <h2 className="text-2xl font-bold text-white">Weather Forecast</h2>
         
-        {/* Today and Next 2 Days Forecast in one row */}
+        {/* Today and Next 2 Days Forecast */}
         <div className="grid grid-cols-3 gap-4">
           {/* Today's Weather */}
           <div className="col-span-1 bg-black/30 rounded-xl p-4">
@@ -224,7 +223,7 @@ const WeatherWidget = ({ data, historyEvent }) => (
           ))}
         </div>
 
-        {/* Bottom section with Todo and History side by side */}
+        {/* Tasks and History */}
         <div className="grid grid-cols-2 gap-4">
           {/* ToDo List */}
           <div className="bg-black/30 rounded-xl p-4">
@@ -320,15 +319,15 @@ const EnvironmentWidget = ({ indoor, outdoor }) => (
           </div>
         </div>
       </div>
-    </div>
-  </motion.div>
+          </div>
+        </motion.div>
 )
 
 const GermanPhraseWidget = ({ phrase }) => (
-  <motion.div 
+        <motion.div 
     className="bg-black/40 backdrop-blur-xl rounded-2xl p-4 border border-white/10"
-    whileHover={{ scale: 1.01 }}
-  >
+          whileHover={{ scale: 1.01 }}
+        >
     <div className="flex justify-between items-center mb-4">
       <h2 className="text-lg font-bold text-white">German Phrase</h2>
       <span className="text-xl">🇩🇪</span>
@@ -352,13 +351,13 @@ const ParticleBackground = () => {
   )
 
   return (
-    <motion.div
+                <motion.div 
       className="absolute inset-0"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-    >
+                >
       {particles.map((particle) => (
-        <motion.div
+                  <motion.div
           key={particle.id}
           className="absolute w-1 h-1 bg-white/20 rounded-full"
           initial={{ y: -20, opacity: 0 }}
@@ -366,9 +365,9 @@ const ParticleBackground = () => {
             y: ["-20px", "120px"],
             opacity: [0, 1, 0],
           }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
             delay: particle.delay,
           }}
           style={{
@@ -376,7 +375,7 @@ const ParticleBackground = () => {
           }}
         />
       ))}
-    </motion.div>
+                </motion.div>
   )
 }
 
@@ -398,7 +397,7 @@ const WaveAnimation = () => (
         }}
       />
     ))}
-  </div>
+              </div>
 )
 
 // Add this at the top of the file
